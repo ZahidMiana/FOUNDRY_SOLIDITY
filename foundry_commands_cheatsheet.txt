@@ -1,0 +1,130 @@
+# Foundry CLI Commands Cheat Sheet
+
+## forge (Smart Contract Development)
+
+forge init <project_name>  # Initialize a new Foundry project
+forge build                # Compile all smart contracts in the project
+forge test                 # Run all tests in the test/ directory
+forge clean                # Remove build artifacts and cache
+forge script <path>:<Contract> [options]  # Run a deployment or interaction script
+forge create <Contract> [options]         # Deploy a contract to a network
+forge verify-contract <address> <contract> [options]  # Verify contract on Etherscan
+forge snapshot             # Take a snapshot of the current test state
+forge update               # Update Foundry dependencies
+forge install <repo>       # Install a library from GitHub
+forge remappings           # Show remappings for imports
+forge fmt                   # Format Solidity files
+forge doc                   # Generate documentation from contracts
+forge coverage              # Generate test coverage report
+forge config                # Show current configuration
+forge help                  # Show help for forge commands
+
+# Advanced/Extra forge commands
+forge test --match-test <pattern>         # Run tests matching a pattern
+forge test --gas-report                   # Show gas usage for tests
+forge test --fuzz                         # Run fuzz tests
+forge build --sizes                       # Show contract sizes after build
+forge script <path>:<Contract> --sig <function()>  # Specify function to run in script
+forge script <path>:<Contract> --dry-run  # Simulate script without broadcasting
+forge script <path>:<Contract> --fork-url <url>    # Run script on a forked network
+forge inspect <contract> <type>           # Inspect contract details (methods, events, etc.)
+forge coverage --report lcov              # Generate lcov coverage report
+forge completions bash|zsh|fish           # Generate shell completions
+
+## cast (Ethereum RPC & Utilities)
+
+cast send <address> <function> [args] [options]  # Send a transaction to a contract
+cast call <address> <function> [args] [options]  # Call a contract function (read-only)
+cast abi-encode <function> [args]                # ABI encode function call
+cast abi-decode <signature> <data>               # ABI decode data
+cast block <block_number>                        # Get block details
+cast tx <tx_hash>                                # Get transaction details
+cast receipt <tx_hash>                           # Get transaction receipt
+cast balance <address>                           # Get ETH balance of an address
+cast wallet new                                  # Generate a new wallet
+cast to-wei <amount> <unit>                      # Convert ETH to wei
+cast from-wei <amount> <unit>                    # Convert wei to ETH
+cast keccak <data>                               # Compute keccak256 hash
+cast help                                        # Show help for cast commands
+
+# Advanced/Extra cast commands
+cast rpc <method> [params]                # Make a raw RPC call
+cast storage <address> <slot>             # Read storage slot from contract
+cast run <script>                         # Run a Solidity script
+cast chain-id                             # Get current chain ID
+cast nonce <address>                      # Get account nonce
+cast code <address>                       # Get contract bytecode
+cast estimate <address> <function> [args] # Estimate gas for a function call
+cast block-number                         # Get latest block number
+cast send-eth <address> <amount>          # Send ETH to an address
+
+## anvil (Local Ethereum Node)
+
+anvil                        # Start a local Ethereum node for testing
+anvil --port <port>          # Specify port for node
+anvil --fork-url <url>       # Fork mainnet or testnet at given RPC URL
+anvil --block-time <seconds> # Set block time interval
+anvil help                   # Show help for anvil commands
+
+# Advanced/Extra anvil options
+anvil --mnemonic <words>                  # Use custom mnemonic for accounts
+anvil --accounts <num>                    # Number of accounts to generate
+anvil --balance <amount>                  # Set initial balance for accounts
+anvil --chain-id <id>                     # Set custom chain ID
+anvil --gas-limit <amount>                # Set block gas limit
+
+# Usage Example:
+# forge build                # Compile contracts
+# anvil                      # Start local node
+# forge script script/DeploySimpleStorage.s.sol:DeploySimpleStorage --rpc-url http://127.0.0.1:8545 --broadcast --private-key <key>  # Deploy contract
+
+
+
+
+
+
+
+
+
+
+# Each command above includes a one-line description for its purpose.
+#
+# =============================
+# Actual/Practical Foundry Commands (for this project)
+# =============================
+
+# Initialize a new Foundry project (if starting from scratch)
+forge init Foundry
+
+# Compile all contracts
+forge build
+
+# Run all tests in test/
+forge test
+
+# Clean build artifacts and cache
+forge clean
+
+# Format Solidity files
+forge fmt
+
+# Deploy SimpleStorage contract using a script (with broadcast)
+forge script script/DeploySimpleStorage.s.sol:DeploySimpleStorage --rpc-url http://127.0.0.1:8545 --broadcast --private-key <your_private_key>
+
+# Deploy SimpleStorage contract directly (no script)
+forge create src/SimpleStorage.sol:SimpleStorage --rpc-url http://127.0.0.1:8545 --private-key <your_private_key>
+
+# Start a local Ethereum node for testing
+anvil
+
+# Example: Get ETH balance of an address
+cast balance <address> --rpc-url http://127.0.0.1:8545
+
+# Example: Call retrieve() on SimpleStorage contract
+cast call <contract_address> "retrieve()" --rpc-url http://127.0.0.1:8545
+
+# Example: Store a value in SimpleStorage contract
+cast send <contract_address> "store(uint256)" 42 --rpc-url http://127.0.0.1:8545 --private-key <your_private_key>
+
+# Example: Get latest block number
+cast block-number --rpc-url http://127.0.0.1:8545
